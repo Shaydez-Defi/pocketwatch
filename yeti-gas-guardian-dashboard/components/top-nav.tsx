@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { Snowflake, Wallet, ChevronDown, Loader2 } from 'lucide-react'
+import Image from 'next/image'
+import { Wallet, ChevronDown, Loader2 } from 'lucide-react'
 import { ConnectButton } from '@mysten/dapp-kit'
 import { useWallets } from '@/components/wallet-provider'
 import { connectBrowserWallet, shortenAddress } from '@/lib/wallet'
@@ -27,45 +28,56 @@ export function TopNav() {
 
   return (
     <header className="sticky top-0 z-30 border-b border-border/60 bg-background/70 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-5">
-        <div className="flex items-center gap-3">
-          <div className="relative flex size-9 items-center justify-center rounded-xl bg-primary/15 text-primary glow-purple">
-            <Snowflake className="size-5" aria-hidden="true" />
-          </div>
-          <div className="leading-tight">
+      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-2 px-3 sm:px-5">
+        <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+          <Image
+            src="/logo.png"
+            alt="PocketWatch logo"
+            width={36}
+            height={36}
+            priority
+            className="size-9 shrink-0 rounded-xl object-cover glow-purple"
+          />
+          <div className="hidden leading-tight sm:block">
             <p className="font-heading text-sm font-bold tracking-tight text-foreground">
-              Yeti Gas Guardian
+              PocketWatch
             </p>
             <p className="text-[11px] text-muted-foreground">your fees, watched over</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
-          <ConnectButton connectText="Connect Sui" />
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+          <div className="[&_button]:!rounded-full [&_button]:!px-3 [&_button]:!py-1.5 [&_button]:!text-xs sm:[&_button]:!px-4 sm:[&_button]:!py-2 sm:[&_button]:!text-sm">
+            <ConnectButton connectText="Connect Sui" />
+          </div>
           <div className="relative">
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
             className={[
-              'group flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all',
+              'group flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-all sm:gap-2 sm:px-4 sm:py-2 sm:text-sm',
               wallets.length
                 ? 'border-success/40 bg-success/10 text-success glow-green'
                 : 'border-primary/40 bg-primary/10 text-primary hover:bg-primary/20 glow-purple',
             ].join(' ')}
           >
             {connecting ? (
-              <Loader2 className="size-4 animate-spin" aria-hidden="true" />
+              <Loader2 className="size-3.5 animate-spin sm:size-4" aria-hidden="true" />
             ) : (
-              <Wallet className="size-4" aria-hidden="true" />
+              <Wallet className="size-3.5 sm:size-4" aria-hidden="true" />
             )}
             {wallets.length ? (
               <span className="font-mono text-xs">
-                {wallets.length} wallet{wallets.length > 1 ? 's' : ''}
+                {wallets.length}
+                <span className="hidden sm:inline"> wallet{wallets.length > 1 ? 's' : ''}</span>
               </span>
             ) : (
-              <span>Connect Wallet</span>
+              <span>
+                <span className="sm:hidden">Connect</span>
+                <span className="hidden sm:inline">Connect Wallet</span>
+              </span>
             )}
-            <ChevronDown className="size-4 opacity-70" aria-hidden="true" />
+            <ChevronDown className="hidden size-4 opacity-70 sm:block" aria-hidden="true" />
           </button>
 
           {open && (

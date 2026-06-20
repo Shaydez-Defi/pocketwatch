@@ -28,15 +28,29 @@ export function Dashboard() {
       <TopNav />
       <main className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-5 py-10">
         <Hero />
-        <MetricCards
-          totalPaid={totalPaid}
-          totalSui={totalSui}
-          saved={saved}
-          canSave={sourceLabel !== null}
-        />
+        <div
+          key={`metrics-${sourceLabel ?? 'sample'}`}
+          className={`animate-fade-in-up transition-opacity duration-300 ${
+            pricing ? 'opacity-60' : 'opacity-100'
+          }`}
+        >
+          <MetricCards
+            totalPaid={totalPaid}
+            totalSui={totalSui}
+            saved={saved}
+            canSave={sourceLabel !== null}
+          />
+        </div>
         <SavingsBoard />
         <div className="flex flex-col gap-5">
-          <FeeChart data={data} />
+          <div
+            key={`chart-${sourceLabel ?? 'sample'}`}
+            className={`animate-fade-in-up transition-opacity duration-300 ${
+              pricing ? 'opacity-60' : 'opacity-100'
+            }`}
+          >
+            <FeeChart data={data} />
+          </div>
           <div className="grid gap-5 md:grid-cols-2">
             <WalletPanel
               loading={pricing}
@@ -61,7 +75,7 @@ export function Dashboard() {
         </div>
         <YetiTip saved={saved} />
         <footer className="pb-4 pt-2 text-center text-xs text-muted-foreground">
-          Yeti Gas Guardian — built for late nights and lighter wallets.
+          PocketWatch — built for late nights and lighter wallets.
         </footer>
       </main>
     </div>

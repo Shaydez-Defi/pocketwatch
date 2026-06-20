@@ -1,8 +1,8 @@
-# 🏔️ Yeti Gas Guardian
+# 🏔️ PocketWatch
 
 > Track how much you've **lost to gas fees** across every chain — and exactly how much you'd have **saved on Sui**. Then prove it on-chain.
 
-Yeti Gas Guardian is a Web3 dashboard that reads your real transaction history across multiple blockchains, prices each gas fee in USD, and compares it against what the *same activity* would have cost on **Sui**. When the numbers hurt, you can save your analysis to the Sui blockchain — contributing to a live, shared **Community Savings Board** that aggregates how much everyone collectively would have saved.
+PocketWatch is a Web3 dashboard that reads your real transaction history across multiple blockchains, prices each gas fee in USD, and compares it against what the *same activity* would have cost on **Sui**. When the numbers hurt, you can save your analysis to the Sui blockchain — contributing to a live, shared **Community Savings Board** that aggregates how much everyone collectively would have saved.
 
 Built for the Sui hackathon. The core on-chain logic is written in **Move**.
 
@@ -110,13 +110,19 @@ npm run dev
 
 Open **http://localhost:3000**.
 
-To enable the optional Etherscan key, create `yeti-gas-guardian-dashboard/.env`:
+Optional environment variables — create `yeti-gas-guardian-dashboard/.env`:
 
 ```
+# Faster, more reliable EVM gas history (one key covers all 6 EVM chains via Etherscan V2)
 ETHERSCAN_API_KEY=your_key_here
+
+# Enables tap-to-connect EVM wallets on mobile via WalletConnect (free ID at cloud.reown.com)
+NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_project_id_here
 ```
 
-> One key covers all six EVM chains via the Etherscan V2 API. Without it, the app falls back to keyless Blockscout (works, but slower/less reliable on some chains).
+> **ETHERSCAN_API_KEY** — without it, the app falls back to keyless Blockscout (works, but slower/less reliable on some chains).
+>
+> **NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID** — on mobile browsers there's no wallet extension, so "Connect Wallet" uses WalletConnect (deep-links into wallet apps). Without this ID, mobile users are prompted to paste their address instead.
 
 ### Build & test the contract
 

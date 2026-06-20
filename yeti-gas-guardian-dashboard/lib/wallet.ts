@@ -56,19 +56,58 @@ export function getEthereumProvider(): EthereumProvider | null {
   return eth ?? null
 }
 
-export async function connectBrowserWallet(): Promise<string[]> {
-  const provider = getEthereumProvider()
-  if (!provider) {
-    throw new Error('No wallet extension found. Install MetaMask or Rabby.')
+/** EVM chains offered through WalletConnect (Ethereum + the analysis chains). */
+const WC_EVM_CHAINS = [1, 56, 137, 42161, 10, 8453]
+
+/**
+ * Connect an EVM wallet via WalletConnect — the path used on mobile browsers
+ * (and desktop without an extension), where `window.ethereum` is absent.
+ * Requires NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID; without it we surface a clear
+ * "paste your address" hint instead of a hard failure.
+ */
+export async function connectViaWalletConnect(): Promise<string[]> {
+  const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID
+  if (!projectId) {
+    throw new Error(
+      'No wallet detected. On mobile, paste your wallet address below — or set NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID to enable tap-to-connect.',
+    )
   }
 
-  const accounts = (await provider.request({
-    method: 'eth_requestAccounts',
-  })) as string[]
+  const { EthereumProvider } = await import('@walletconnect/ethereum-provider')
+  const wc = await EthereumProvider.init({
+    projectId,
+    chains: [1],
+    optionalChains: WC_EVM_CHAINS as [number, ...number[]],
+    showQrModal: true,
+    metadata: {
+      name: 'PocketWatch',
+      description: 'Track your gas fees across chains and compare to Sui.',
+      url: typeof window !== 'undefined' ? window.location.origin : 'https://pocketwatch.app',
+      icons: ['/logo.png'],
+    },
+  })
 
+  const accounts = (await wc.connect().then(() => wc.accounts)) as string[]
   if (!accounts?.length) {
-    throw new Error('No accounts returned from wallet.')
+    throw new Error('No accounts returned from WalletConnect.')
   }
 
   return accounts.map((a) => a.toLowerCase())
+}
+
+export async function connectBrowserWallet(): Promise<string[]> {
+  const provider = getEthereumProvider()
+
+  // Injected provider present (desktop extension or wallet in-app browser).
+  if (provider) {
+    const accounts = (await provider.request({
+      method: 'eth_requestAccounts',
+    })) as string[]
+    if (accounts?.length) {
+      return accounts.map((a) => a.toLowerCase())
+    }
+  }
+
+  // No injected provider (typical on a plain mobile browser) → WalletConnect.
+  return connectViaWalletConnect()
 }

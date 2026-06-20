@@ -12,7 +12,7 @@ export function Hero() {
         />
         <Image
           src="/yeti-guardian.png"
-          alt="The Yeti Gas Guardian mascot wearing headphones"
+          alt="The PocketWatch Yeti mascot wearing headphones"
           width={360}
           height={360}
           priority

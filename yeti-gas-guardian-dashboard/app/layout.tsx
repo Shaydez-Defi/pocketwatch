@@ -16,7 +16,7 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'Yeti Gas Guardian — Track Your Crypto Fees',
+  title: 'PocketWatch — Track Your Crypto Fees',
   description:
     'A chill late-night dashboard that tracks how much you spend on gas fees and how much you could have saved. Your friendly Yeti has thoughts.',
   generator: 'v0.app',
