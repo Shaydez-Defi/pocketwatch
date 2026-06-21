@@ -2,9 +2,10 @@
 
 import { useState } from 'react'
 import type { LucideIcon } from 'lucide-react'
-import { CheckCircle2, Flame, Leaf, Loader2, PiggyBank, UploadCloud } from 'lucide-react'
+import { CheckCircle2, Flame, Leaf, Loader2, PiggyBank, ShieldCheck, UploadCloud } from 'lucide-react'
 import { useQueryClient } from '@tanstack/react-query'
 import {
+  ConnectButton,
   useCurrentAccount,
   useSignAndExecuteTransaction,
   useSuiClient,
@@ -134,48 +135,64 @@ function SaveToSui({
     }
   }
 
-  if (!account) {
-    return (
-      <p className="text-center text-xs text-muted-foreground">
-        Connect your Sui wallet (top right) to save this analysis on-chain.
-      </p>
-    )
-  }
-
   return (
-    <div className="flex flex-col items-center gap-2">
-      <button
-        type="button"
-        onClick={handleSave}
-        disabled={status === 'saving'}
-        className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
-      >
-        {status === 'saving' ? (
-          <>
-            <Loader2 className="size-4 animate-spin" aria-hidden="true" />
-            Saving to Sui…
-          </>
-        ) : status === 'done' ? (
-          <>
-            <CheckCircle2 className="size-4" aria-hidden="true" />
-            Saved to Sui
-          </>
+    <div className="glass glow-purple rounded-2xl border border-primary/30 p-6">
+      <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:justify-between sm:text-left">
+        <div className="flex items-start gap-3">
+          <span className="hidden size-11 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary glow-purple sm:flex">
+            <ShieldCheck className="size-5" aria-hidden="true" />
+          </span>
+          <div>
+            <p className="font-heading text-lg font-bold text-foreground">
+              Optional — save your analysis on Sui
+            </p>
+            <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">
+              {account
+                ? `Want a permanent receipt? Write this ${formatUsd(saved)} estimate to your on-chain ledger and the community board.`
+                : `Connect a Sui wallet if you want this analysis saved on-chain — totally optional.`}
+            </p>
+            {message && (
+              <p
+                className={`mt-2 text-xs ${
+                  status === 'error' ? 'text-destructive' : 'text-success'
+                }`}
+              >
+                {message}
+              </p>
+            )}
+          </div>
+        </div>
+
+        {account ? (
+          <button
+            type="button"
+            onClick={handleSave}
+            disabled={status === 'saving'}
+            className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
+          >
+            {status === 'saving' ? (
+              <>
+                <Loader2 className="size-4 animate-spin" aria-hidden="true" />
+                Saving to Sui…
+              </>
+            ) : status === 'done' ? (
+              <>
+                <CheckCircle2 className="size-4" aria-hidden="true" />
+                Saved — save again
+              </>
+            ) : (
+              <>
+                <UploadCloud className="size-4" aria-hidden="true" />
+                Save to Sui
+              </>
+            )}
+          </button>
         ) : (
-          <>
-            <UploadCloud className="size-4" aria-hidden="true" />
-            Save to Sui
-          </>
+          <div className="shrink-0 [&_button]:!rounded-xl [&_button]:!px-6 [&_button]:!py-3 [&_button]:!text-sm [&_button]:!font-semibold">
+            <ConnectButton connectText="Connect Sui to save" />
+          </div>
         )}
-      </button>
-      {message && (
-        <p
-          className={`text-center text-xs ${
-            status === 'error' ? 'text-destructive' : 'text-success'
-          }`}
-        >
-          {message}
-        </p>
-      )}
+      </div>
     </div>
   )
 }
@@ -197,21 +214,21 @@ export function MetricCards({
         <MetricCard
           label="Total Fees Paid"
           value={formatUsd(totalPaid)}
-          hint="What your chains actually charged in gas. Ouch."
+          hint="Money that left your wallet as gas. The uncomfortable truth."
           icon={Flame}
           tone="red"
         />
         <MetricCard
-          label="Sui Would've Charged"
+          label="Est. on Sui"
           value={formatUsd(totalSui)}
-          hint="The same transactions, settled on Sui. Pocket change."
+          hint="Rough estimate — same txs priced on Sui. Not a quote."
           icon={Leaf}
           tone="green"
         />
         <MetricCard
-          label="You Would've Saved"
+          label="Est. Difference"
           value={formatUsd(saved)}
-          hint="Money the Yeti wishes you still had."
+          hint="One chain comparison. Other chains may differ too — see simulator below."
           icon={PiggyBank}
           tone="purple"
         />

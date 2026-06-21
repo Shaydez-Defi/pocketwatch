@@ -10,6 +10,8 @@ export type FeeRow = {
   tokenPriceUsd?: number
   /** Normalized YYYY-MM-DD used for historical lookup */
   pricedOn?: string
+  chain?: string
+  txHash?: string
 }
 
 export type ParsedCsvRow = {

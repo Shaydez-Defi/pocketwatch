@@ -223,6 +223,8 @@ export async function enrichParsedRows(rows: ParsedCsvRow[]): Promise<FeeRow[]> 
       token: row.currency ?? tokenId,
       tokenPriceUsd,
       pricedOn: dateKey ?? undefined,
+      chain: row.chain,
+      txHash: row.txHash,
     }
   })
 }

@@ -16,9 +16,9 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'PocketWatch — Track Your Crypto Fees',
+  title: 'PocketWatch — Prove Your Gas Savings on Sui',
   description:
-    'A chill late-night dashboard that tracks how much you spend on gas fees and how much you could have saved. Your friendly Yeti has thoughts.',
+    'Track what you spend on gas across every chain, see how much Sui would have saved you, then write that proof on-chain to a public Sui ledger. Your friendly Yeti keeps the receipts.',
   generator: 'v0.app',
 }
 

@@ -31,15 +31,21 @@ function ChartTooltip({ active, payload, label }: any) {
   )
 }
 
-export function FeeChart({ data }: { data: FeeRow[] }) {
+export function FeeChart({
+  data,
+  hasRealData = false,
+}: {
+  data: FeeRow[]
+  hasRealData?: boolean
+}) {
   return (
     <div className="glass glow-purple flex min-h-[260px] flex-col rounded-2xl p-6">
       <div className="mb-4">
         <h2 className="font-heading text-lg font-bold text-foreground">
-          Fee Spending Over Time
+          {hasRealData ? 'Where the money leaked' : 'Fee Spending Over Time'}
         </h2>
         <p className="text-xs text-muted-foreground">
-          Purple is what you paid on your chain(s). Green is Sui.
+          Purple = what you paid. Green = est. on Sui. Sample data until you analyze a wallet.
         </p>
       </div>
       <div className="min-h-[256px] w-full flex-1">
