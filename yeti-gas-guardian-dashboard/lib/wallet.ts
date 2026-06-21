@@ -60,7 +60,7 @@ export function getEthereumProvider(): EthereumProvider | null {
 const WC_EVM_CHAINS = [1, 56, 137, 42161, 10, 8453]
 
 /**
- * Connect an EVM wallet via WalletConnect — the path used on mobile browsers
+ * Connect an EVM wallet via WalletConnect, the path used on mobile browsers
  * (and desktop without an extension), where `window.ethereum` is absent.
  * Requires NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID; without it we surface a clear
  * "paste your address" hint instead of a hard failure.
@@ -69,7 +69,7 @@ export async function connectViaWalletConnect(): Promise<string[]> {
   const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID
   if (!projectId) {
     throw new Error(
-      'No wallet detected. On mobile, paste your wallet address below — or set NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID to enable tap-to-connect.',
+      'No wallet detected. On mobile, paste your wallet address below, or set NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID to enable tap to connect.',
     )
   }
 

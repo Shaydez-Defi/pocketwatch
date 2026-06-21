@@ -69,7 +69,7 @@ export function CsvUpload({
             Upload Your History
           </h2>
           <p className="text-xs text-muted-foreground">
-            Any chain in your CSV — priced per day, compared against Sui gas.
+            Any chain in your CSV, priced per day and compared against Sui gas.
           </p>
         </div>
         {fileName && (

@@ -65,7 +65,7 @@ export function WalletPanel({
       }
 
       const enriched = (await enrichRes.json()) as { rows: FeeRow[] }
-      const label = `${wallets.length} wallet${wallets.length > 1 ? 's' : ''} · on-chain`
+      const label = `${wallets.length} wallet${wallets.length > 1 ? 's' : ''} · onchain`
       onData(enriched.rows, label)
     } catch (err) {
       setFetchError(err instanceof Error ? err.message : 'Wallet analysis failed.')
@@ -81,7 +81,7 @@ export function WalletPanel({
           Connect Wallets
         </h2>
         <p className="text-xs text-muted-foreground">
-          Add multiple wallets — we pull gas history across each chain, then
+          Add multiple wallets and we pull gas history across each chain, then
           compare what you would have paid on Sui.
         </p>
         <div className="mt-3 flex flex-wrap gap-1.5">

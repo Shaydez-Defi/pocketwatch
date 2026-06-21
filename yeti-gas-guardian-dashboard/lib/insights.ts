@@ -72,7 +72,7 @@ const REGRET_QUIPS = [
   'Big man lifestyle no easy.',
 ]
 
-/** Rough avg USD per tx — estimates only, not live quotes. */
+/** Rough avg USD per tx. Estimates only, not live quotes. */
 const ALT_CHAIN_PER_TX_USD: Record<string, number> = {
   Sui: 0.001,
   Solana: 0.003,
@@ -89,7 +89,7 @@ const PERSONALITIES: Record<
     title: 'Professional Gas Burner',
     icon: '🔥',
     description:
-      'You don\'t "pay fees" — you fund entire validator retirement plans. Respect the dedication.',
+      'You don\'t "pay fees." You fund entire validator retirement plans. Respect the dedication.',
   },
   bridge_addict: {
     title: 'Bridge Addict',
@@ -101,7 +101,7 @@ const PERSONALITIES: Record<
     title: 'DeFi Warrior',
     icon: '⚔️',
     description:
-      'Many txs, many chains, many swaps. You fight for yield — gas is just collateral damage.',
+      'Many txs, many chains, many swaps. You fight for yield. Gas is just collateral damage.',
   },
   nft_degenerate: {
     title: 'NFT Degenerate',
@@ -299,7 +299,7 @@ function buildAnalystBullets(
   }
 
   bullets.push(
-    `You ran ${txCount} on-chain move${txCount === 1 ? '' : 's'} and ${formatUsd(insights.totalPaid)} quietly left your wallet as gas. That's real money — not "network noise."`,
+    `You ran ${txCount} onchain move${txCount === 1 ? '' : 's'} and ${formatUsd(insights.totalPaid)} quietly left your wallet as gas. That's real money, not "network noise."`,
   )
 
   if (insights.favoriteChain !== 'Unknown') {
@@ -316,7 +316,7 @@ function buildAnalystBullets(
     : null
   if (heavy) {
     bullets.push(
-      `${heavy.label} was your heaviest month at ${formatUsd(heavy.total)}. Something was happening — launches, farming, or pure chaos.`,
+      `${heavy.label} was your heaviest month at ${formatUsd(heavy.total)}. Something was happening: launches, farming, or pure chaos.`,
     )
   }
 
@@ -326,7 +326,7 @@ function buildAnalystBullets(
 
   if (insights.saved > 0) {
     bullets.push(
-      `On other chains, the same activity might've cost less — roughly ${formatUsd(insights.saved)} less on Sui (estimate). Your call whether that matters; we're just holding the mirror.`,
+      `On other chains, the same activity might've cost less, roughly ${formatUsd(insights.saved)} less on Sui (estimate). Your call whether that matters; we're just holding the mirror.`,
     )
   }
 
@@ -402,16 +402,16 @@ export function answerAnalystQuestion(
   if (q.includes('why') && (q.includes('high') || q.includes('much') || q.includes('fee'))) {
     const heavy = insights.heaviestMonth
     return heavy
-      ? `Fees spike when activity spikes. Your worst month was ${heavy.label} at ${formatUsd(heavy.total)} across ${heavy.txCount} txs. ${insights.favoriteChain} is where most of your money went — that's the pattern.`
+      ? `Fees spike when activity spikes. Your worst month was ${heavy.label} at ${formatUsd(heavy.total)} across ${heavy.txCount} txs. ${insights.favoriteChain} is where most of your money went. That's the pattern.`
       : `You're averaging ${formatUsd(insights.totalPaid / Math.max(insights.txCount, 1))} per transaction. Busy chains + busy months = expensive mirror.`
   }
 
   if (q.includes('what kind') || q.includes('who am') || q.includes('personality')) {
-    return `You're giving ${insights.personality.title} energy — ${insights.personality.confidence}% confidence. ${insights.personality.description}`
+    return `You're giving ${insights.personality.title} energy (${insights.personality.confidence}% confidence). ${insights.personality.description}`
   }
 
   if (q.includes('which chain') || q.includes('rely') || q.includes('most')) {
-    return `${insights.favoriteChain} is your main stage. That's where the bulk of your gas story lives. Not judgment — just the ledger talking.`
+    return `${insights.favoriteChain} is your main stage. That's where the bulk of your gas story lives. Not judgment, just the ledger talking.`
   }
 
   if (q.includes('explain') || q.includes('behavior')) {
@@ -419,7 +419,7 @@ export function answerAnalystQuestion(
   }
 
   return insights.analystBullets[0] ??
-    'Paste a wallet or CSV first — then I can roast your gas habits properly.'
+    'Paste a wallet or CSV first, then I can roast your gas habits properly.'
 }
 
 export function buildWrappedCaption(insights: PocketWatchInsights): string {

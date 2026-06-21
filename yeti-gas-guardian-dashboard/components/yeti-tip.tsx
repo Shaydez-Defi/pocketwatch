@@ -11,7 +11,7 @@ function pickTip(saved: number): string {
     return "Omo, your records dey clean! No wasted gas here. The Yeti dey proud of you, no cap."
   }
   if (saved < 50) {
-    return `Small small loss — ${formatUsd(saved)} just waka commot. That one na suya money, abeg take am easy next time.`
+    return `Small small loss: ${formatUsd(saved)} just waka commot. That one na suya money, abeg take am easy next time.`
   }
   if (saved < 200) {
     return `Chai! ${formatUsd(saved)} don disappear for gas. That one fit don buy correct jollof and chicken o.`

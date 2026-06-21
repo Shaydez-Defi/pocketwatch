@@ -158,12 +158,12 @@ function SaveToSui({
           </span>
           <div>
             <p className="font-heading text-lg font-bold text-foreground">
-              Optional — save your analysis on Sui
+              Optional: save your analysis on Sui
             </p>
             <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">
               {account
-                ? `Want a permanent receipt? Write this ${formatUsd(saved)} estimate to your on-chain ledger and the community board.`
-                : `Connect a Sui wallet if you want this analysis saved on-chain — totally optional.`}
+                ? `Want a permanent receipt? Write this ${formatUsd(saved)} estimate to your onchain ledger and the community board.`
+                : `Connect a Sui wallet if you want this analysis saved onchain. Totally optional.`}
             </p>
             {message && (
               <p
@@ -192,7 +192,7 @@ function SaveToSui({
             ) : status === 'done' ? (
               <>
                 <CheckCircle2 className="size-4" aria-hidden="true" />
-                Saved — save again
+                Saved. Save again
               </>
             ) : (
               <>
@@ -239,7 +239,7 @@ export function MetricCards({
         <MetricCard
           label="Est. on Sui"
           amount={totalSui}
-          hint="Rough estimate — same txs priced on Sui. Not a quote."
+          hint="Rough estimate: same txs priced on Sui. Not a quote."
           icon={Leaf}
           tone="green"
           animate={animate}
@@ -248,7 +248,7 @@ export function MetricCards({
         <MetricCard
           label="Est. Difference"
           amount={saved}
-          hint="One chain comparison. Other chains may differ too — see simulator below."
+          hint="One chain comparison. Other chains may differ too. See simulator below."
           icon={PiggyBank}
           tone="purple"
           animate={animate}

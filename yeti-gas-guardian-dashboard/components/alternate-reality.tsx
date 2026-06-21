@@ -20,7 +20,7 @@ export function AlternateReality({ estimates }: { estimates: AlternateEstimate[]
             Alternate Reality Simulator
           </h2>
           <p className="text-[11px] text-muted-foreground">
-            Est. same activity on other chains — not exact quotes
+            Est. same activity on other chains. Not exact quotes.
           </p>
         </div>
       </div>

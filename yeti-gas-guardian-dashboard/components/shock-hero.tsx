@@ -34,7 +34,7 @@ function LandingHero() {
           </h1>
           <p className="text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
             Connect wallets or drop a CSV. PocketWatch pulls real gas history,
-            prices it per day, and shows you the uncomfortable truth — with
+            prices it per day, and shows you the uncomfortable truth with
             personality, humor, and shareable receipts.
           </p>
         </div>
@@ -101,7 +101,7 @@ function ResultsHero({
             />
           </div>
           <p className="text-[11px] text-muted-foreground">
-            All chain comparisons are estimates — not financial advice, not exact quotes.
+            All chain comparisons are estimates. Not financial advice, not exact quotes.
           </p>
         </div>
         <div className="hidden lg:block">

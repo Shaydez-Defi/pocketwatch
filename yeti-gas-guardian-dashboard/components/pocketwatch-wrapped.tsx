@@ -110,7 +110,7 @@ export function PocketWatchWrapped({ insights }: { insights: PocketWatchInsights
         {insights.topRegrets[0] && (
           <p className="mt-4 rounded-xl bg-destructive/10 px-3 py-2 text-xs text-destructive">
             Biggest regret: {formatUsd(insights.topRegrets[0].paid)} on{' '}
-            {insights.topRegrets[0].chain} — {insights.topRegrets[0].quip}
+            {insights.topRegrets[0].chain}: {insights.topRegrets[0].quip}
           </p>
         )}
       </div>

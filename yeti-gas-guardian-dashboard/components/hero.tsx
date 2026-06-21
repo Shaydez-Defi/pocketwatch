@@ -34,11 +34,11 @@ export function Hero() {
         <h1 className="text-balance font-heading text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl">
           Your gas is{' '}
           <span className="text-primary text-glow">leaking</span>. Prove what Sui
-          saves you — <span className="text-primary text-glow">on-chain</span>.
+          saves you <span className="text-primary text-glow">onchain</span>.
         </h1>
         <p className="text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
           Connect your wallets or drop a CSV. We pull real gas history, price it
-          per day, and show what the same moves would&apos;ve cost on Sui — then
+          per day, and show what the same moves would&apos;ve cost on Sui. Then
           let you write that proof to the chain, forever. The Yeti keeps the
           receipts.
         </p>

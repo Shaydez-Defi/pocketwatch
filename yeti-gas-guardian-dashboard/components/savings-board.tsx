@@ -26,14 +26,14 @@ export function SavingsBoard() {
             Community Savings Board
           </h2>
           <p className="text-[11px] text-muted-foreground">
-            Live on Sui — every saved analysis adds to the total.
+            Live on Sui. Every saved analysis adds to the total.
           </p>
         </div>
       </div>
 
       {isError ? (
         <p className="text-xs text-destructive">
-          Couldn&apos;t reach the on-chain board. Try again shortly.
+          Couldn&apos;t reach the onchain board. Try again shortly.
         </p>
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">

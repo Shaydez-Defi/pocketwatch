@@ -182,7 +182,7 @@ export function Dashboard() {
 
         <YetiTip saved={saved} insights={insights} />
         <footer className="pb-4 pt-2 text-center text-xs text-muted-foreground">
-          PocketWatch — where did your onchain money go?
+          PocketWatch · where did your onchain money go?
         </footer>
       </main>
     </div>

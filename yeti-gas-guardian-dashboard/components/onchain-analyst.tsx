@@ -30,7 +30,7 @@ export function OnchainAnalyst({ insights }: { insights: PocketWatchInsights }) 
         <div>
           <h2 className="font-heading text-lg font-bold text-foreground">Onchain Analyst</h2>
           <p className="text-[11px] text-muted-foreground">
-            Friendly accountant energy — not a chatbot
+            Friendly accountant energy, not a chatbot
           </p>
         </div>
       </div>
