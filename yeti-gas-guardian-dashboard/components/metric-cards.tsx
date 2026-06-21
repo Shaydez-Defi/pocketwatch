@@ -11,6 +11,7 @@ import {
   useSuiClient,
 } from '@mysten/dapp-kit'
 import { formatUsd } from '@/lib/fees'
+import { useCountUp } from '@/hooks/use-count-up'
 import {
   buildCreateLedgerTx,
   buildSaveAnalysisTx,
@@ -47,21 +48,29 @@ const toneMap: Record<
 
 function MetricCard({
   label,
-  value,
+  amount,
   hint,
   icon: Icon,
   tone,
+  animate,
+  staggerClass,
 }: {
   label: string
-  value: string
+  amount: number
   hint: string
   icon: LucideIcon
   tone: Tone
+  animate?: boolean
+  staggerClass?: string
 }) {
   const t = toneMap[tone]
+  const display = useCountUp(amount, !!animate)
   return (
     <div
-      className={`glass rounded-2xl p-6 ${t.glow} ${t.ring} transition-transform duration-300 hover:-translate-y-1`}
+      className={[
+        `glass rounded-2xl p-6 ${t.glow} ${t.ring} transition-transform duration-300 hover:-translate-y-1`,
+        animate ? `animate-results-reveal ${staggerClass ?? ''}` : '',
+      ].join(' ')}
     >
       <div className="flex items-center justify-between">
         <p className="text-sm font-medium text-muted-foreground">{label}</p>
@@ -69,8 +78,13 @@ function MetricCard({
           <Icon className="size-5" aria-hidden="true" />
         </span>
       </div>
-      <p className={`mt-4 font-heading text-3xl font-bold tracking-tight sm:text-4xl ${t.text}`}>
-        {value}
+      <p
+        className={[
+          `mt-4 font-heading text-3xl font-bold tracking-tight sm:text-4xl ${t.text}`,
+          animate ? 'animate-count-up' : '',
+        ].join(' ')}
+      >
+        {formatUsd(display)}
       </p>
       <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{hint}</p>
     </div>
@@ -202,39 +216,49 @@ export function MetricCards({
   totalSui,
   saved,
   canSave = false,
+  animate = false,
 }: {
   totalPaid: number
   totalSui: number
   saved: number
   canSave?: boolean
+  animate?: boolean
 }) {
   return (
     <section className="flex flex-col gap-5">
       <div className="grid gap-5 md:grid-cols-3">
         <MetricCard
           label="Total Fees Paid"
-          value={formatUsd(totalPaid)}
+          amount={totalPaid}
           hint="Money that left your wallet as gas. The uncomfortable truth."
           icon={Flame}
           tone="red"
+          animate={animate}
+          staggerClass="animate-stagger-1"
         />
         <MetricCard
           label="Est. on Sui"
-          value={formatUsd(totalSui)}
+          amount={totalSui}
           hint="Rough estimate — same txs priced on Sui. Not a quote."
           icon={Leaf}
           tone="green"
+          animate={animate}
+          staggerClass="animate-stagger-2"
         />
         <MetricCard
           label="Est. Difference"
-          value={formatUsd(saved)}
+          amount={saved}
           hint="One chain comparison. Other chains may differ too — see simulator below."
           icon={PiggyBank}
           tone="purple"
+          animate={animate}
+          staggerClass="animate-stagger-3"
         />
       </div>
       {canSave && (
-        <SaveToSui totalPaid={totalPaid} totalSui={totalSui} saved={saved} />
+        <div className={animate ? 'animate-results-reveal animate-stagger-4' : ''}>
+          <SaveToSui totalPaid={totalPaid} totalSui={totalSui} saved={saved} />
+        </div>
       )}
     </section>
   )

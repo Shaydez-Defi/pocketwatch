@@ -244,4 +244,108 @@
   .animate-count-up {
     animation: count-up-glow 0.6s ease-out both;
   }
+
+  @keyframes watch-hand-spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  .animate-watch-hand {
+    animation: watch-hand-spin 4s linear infinite;
+    transform-origin: 40px 40px;
+  }
+
+  @keyframes message-in {
+    0% {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-message-in {
+    animation: message-in 0.5s ease-out both;
+  }
+
+  @keyframes loader-dot {
+    0%,
+    80%,
+    100% {
+      opacity: 0.35;
+      transform: scale(0.85);
+    }
+    40% {
+      opacity: 1;
+      transform: scale(1.15);
+    }
+  }
+  .animate-loader-dot {
+    animation: loader-dot 1.2s ease-in-out infinite;
+  }
+
+  @keyframes skeleton-shimmer {
+    0% {
+      opacity: 0.55;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.55;
+    }
+  }
+  .animate-skeleton-shimmer {
+    animation: skeleton-shimmer 1.8s ease-in-out infinite;
+  }
+
+  @keyframes skeleton-bar {
+    0%,
+    100% {
+      opacity: 0.35;
+      transform: scaleY(0.92);
+    }
+    50% {
+      opacity: 0.7;
+      transform: scaleY(1);
+    }
+  }
+  .animate-skeleton-bar {
+    animation: skeleton-bar 1.6s ease-in-out infinite;
+    transform-origin: bottom;
+  }
+
+  @keyframes results-reveal {
+    0% {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-results-reveal {
+    animation: results-reveal 0.65s ease-out both;
+  }
+
+  .animate-stagger-1 {
+    animation-delay: 0ms;
+  }
+  .animate-stagger-2 {
+    animation-delay: 120ms;
+  }
+  .animate-stagger-3 {
+    animation-delay: 240ms;
+  }
+  .animate-stagger-4 {
+    animation-delay: 360ms;
+  }
+  .animate-stagger-5 {
+    animation-delay: 480ms;
+  }
 }
