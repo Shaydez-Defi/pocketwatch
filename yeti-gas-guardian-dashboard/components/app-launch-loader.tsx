@@ -1,8 +1,31 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import { LAUNCH_LOADING_MESSAGES } from '@/lib/loading-messages'
+
+const DELAY_THRESHOLD_MS = 450
+const MIN_VISIBLE_MS = 700
+const FADE_MS = 500
+
+type OverlayPhase = 'hidden' | 'enter' | 'visible' | 'exit' | 'done'
+
+function waitForAppReady(): Promise<void> {
+  return new Promise((resolve) => {
+    const finish = () => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => resolve())
+      })
+    }
+
+    if (document.readyState === 'complete') {
+      finish()
+      return
+    }
+
+    window.addEventListener('load', finish, { once: true })
+  })
+}
 
 function PocketWatchIcon() {
   return (
@@ -60,8 +83,10 @@ function PocketWatchIcon() {
 }
 
 export function AppLaunchLoader() {
-  const [phase, setPhase] = useState<'enter' | 'visible' | 'exit' | 'done'>('enter')
+  const [phase, setPhase] = useState<OverlayPhase>('hidden')
   const [messageIndex, setMessageIndex] = useState(0)
+  const shownAtRef = useRef<number | null>(null)
+  const readyRef = useRef(false)
 
   const shuffledMessages = useMemo(() => {
     const copy = [...LAUNCH_LOADING_MESSAGES]
@@ -73,36 +98,77 @@ export function AppLaunchLoader() {
   }, [])
 
   useEffect(() => {
-    const enterTimer = setTimeout(() => setPhase('visible'), 50)
-    return () => clearTimeout(enterTimer)
+    let cancelled = false
+    const timers: ReturnType<typeof setTimeout>[] = []
+
+    function schedule(fn: () => void, ms: number) {
+      const id = setTimeout(fn, ms)
+      timers.push(id)
+      return id
+    }
+
+    function dismissOverlay() {
+      if (cancelled) return
+
+      if (shownAtRef.current === null) {
+        setPhase('done')
+        return
+      }
+
+      const elapsed = performance.now() - shownAtRef.current
+      const remaining = Math.max(0, MIN_VISIBLE_MS - elapsed)
+
+      schedule(() => {
+        if (cancelled) return
+        setPhase('exit')
+        schedule(() => {
+          if (!cancelled) setPhase('done')
+        }, FADE_MS)
+      }, remaining)
+    }
+
+    function revealOverlay() {
+      if (cancelled || readyRef.current) return
+
+      shownAtRef.current = performance.now()
+      setPhase('enter')
+      schedule(() => {
+        if (!cancelled) setPhase('visible')
+      }, 50)
+    }
+
+    const delayTimer = schedule(revealOverlay, DELAY_THRESHOLD_MS)
+
+    waitForAppReady().then(() => {
+      if (cancelled) return
+      readyRef.current = true
+      clearTimeout(delayTimer)
+      dismissOverlay()
+    })
+
+    return () => {
+      cancelled = true
+      clearTimeout(delayTimer)
+      timers.forEach(clearTimeout)
+    }
   }, [])
 
   useEffect(() => {
-    if (phase === 'done') return
+    if (phase !== 'visible' && phase !== 'enter') return
 
-    const minDisplay = setTimeout(() => setPhase('exit'), 2200)
-    const doneTimer = setTimeout(() => setPhase('done'), 2900)
-
-    return () => {
-      clearTimeout(minDisplay)
-      clearTimeout(doneTimer)
-    }
-  }, [phase])
-
-  useEffect(() => {
-    if (phase === 'done') return
     const interval = setInterval(() => {
       setMessageIndex((i) => (i + 1) % shuffledMessages.length)
     }, 2800)
+
     return () => clearInterval(interval)
   }, [phase, shuffledMessages.length])
 
-  if (phase === 'done') return null
+  if (phase === 'hidden' || phase === 'done') return null
 
   return (
     <div
       className={[
-        'fixed inset-0 z-[100] flex items-center justify-center bg-background/95 backdrop-blur-md transition-opacity duration-700',
+        'fixed inset-0 z-[100] flex items-center justify-center bg-background/95 backdrop-blur-md transition-opacity duration-500',
         phase === 'enter' ? 'opacity-0' : '',
         phase === 'visible' ? 'opacity-100' : '',
         phase === 'exit' ? 'opacity-0 pointer-events-none' : '',
@@ -113,7 +179,7 @@ export function AppLaunchLoader() {
     >
       <div
         className={[
-          'flex max-w-md flex-col items-center gap-8 px-8 text-center transition-all duration-700',
+          'flex max-w-md flex-col items-center gap-8 px-8 text-center transition-all duration-500',
           phase === 'visible' ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0',
         ].join(' ')}
       >
