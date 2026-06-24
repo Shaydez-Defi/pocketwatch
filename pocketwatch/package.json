@@ -5,8 +5,8 @@
   "description": "Multi-chain gas fee analysis dashboard with Sui comparison and onchain savings ledger.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Shaydez-Defi/yeti-gas-guardian.git",
-    "directory": "yeti-gas-guardian-dashboard"
+    "url": "https://github.com/Shaydez-Defi/pocketwatch.git",
+    "directory": "pocketwatch"
   },
   "scripts": {
     "dev": "next dev",

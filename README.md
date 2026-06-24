@@ -2,9 +2,9 @@
 
 PocketWatch is a multi-chain Web3 dashboard that analyzes gas fee spending across wallets and blockchains, prices each fee in USD, and compares totals against estimated Sui costs. Users can optionally persist analysis results on Sui testnet through a Move smart contract and contribute to a shared community savings board.
 
-**Live demo:** https://yeti-gas-guardian-dashboard.vercel.app
+**Live demo:** https://pocketwatch.vercel.app
 
-Built for the Sui hackathon. Onchain logic is implemented in Move (`fee_ledger`).
+Built for the Sui hackathon. Onchain logic is implemented in Move (`pocketwatch-contract`).
 
 ## Overview
 
@@ -78,7 +78,7 @@ Insights engine (lib/insights.ts)
 Optional: Save to Sui (PTB via @mysten/dapp-kit)
         |
         v
-Move package: fee_ledger (Sui testnet)
+Move package: pocketwatch-contract (Sui testnet)
   - FeeLedger (owned object, per user)
   - SavingsBoard (shared object, global totals)
   - AnalysisSaved (event)
@@ -102,8 +102,8 @@ Move package: fee_ledger (Sui testnet)
 
 ## Smart contract
 
-Package: `fee_ledger`  
-Module: `yeti::fee_ledger`
+Package: `pocketwatch-contract`  
+Module: `pocketwatch::fee_ledger`
 
 | Sui concept | Implementation |
 | --- | --- |
@@ -129,7 +129,7 @@ USD amounts are stored onchain as integer cents (`u64`). The frontend multiplies
 ### Contract tests
 
 ```bash
-cd fee_ledger
+cd pocketwatch-contract
 sui move test
 ```
 
@@ -154,19 +154,25 @@ The test suite covers ledger creation, single and multiple saves, running-max lo
 - Optional: [Etherscan API key](https://etherscan.io/apis) for faster EVM history
 - Optional: [WalletConnect project ID](https://cloud.reown.com) for mobile EVM wallet connect
 
-### Run the dashboard locally
+### Run locally
 
 ```bash
-cd yeti-gas-guardian-dashboard
+cd pocketwatch
 npm install
 npm run dev
 ```
 
 Open http://localhost:3000.
 
+Alternatively, from the repository root on Windows:
+
+```bat
+start-localhost.bat
+```
+
 ### Environment variables
 
-Create `yeti-gas-guardian-dashboard/.env`:
+Create `pocketwatch/.env`:
 
 ```env
 # Optional. One key covers all supported EVM chains via Etherscan API V2.
@@ -183,7 +189,7 @@ Without `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID`, mobile users can still paste wal
 ### Build for production
 
 ```bash
-cd yeti-gas-guardian-dashboard
+cd pocketwatch
 npm run build
 npm start
 ```
@@ -191,7 +197,7 @@ npm start
 ### Build and test the contract
 
 ```bash
-cd fee_ledger
+cd pocketwatch-contract
 sui move build
 sui move test
 ```
@@ -216,19 +222,20 @@ sui move test
 
 ```
 .
-├── fee_ledger/                         # Move smart contract
+├── pocketwatch/                        # Next.js dashboard
+│   ├── app/
+│   │   ├── api/wallets/transactions/   # Wallet history API
+│   │   ├── api/prices/enrich/          # Pricing API
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── components/                     # UI (dashboard, insights, loaders, wallet panels)
+│   ├── hooks/                          # Client hooks (e.g. count-up animation)
+│   └── lib/                            # chains, explorer, pricing, insights, Sui helpers
+├── pocketwatch-contract/               # Move smart contract
 │   ├── sources/fee_ledger.move
 │   ├── tests/
 │   └── Move.toml
-└── yeti-gas-guardian-dashboard/        # Next.js app (npm package: pocketwatch)
-    ├── app/
-    │   ├── api/wallets/transactions/   # Wallet history API
-    │   ├── api/prices/enrich/          # Pricing API
-    │   ├── layout.tsx
-    │   └── page.tsx
-    ├── components/                     # UI (dashboard, insights, loaders, wallet panels)
-    ├── hooks/                          # Client hooks (e.g. count-up animation)
-    └── lib/                            # chains, explorer, pricing, insights, Sui helpers
+└── start-localhost.bat               # Windows dev shortcut
 ```
 
 ## Disclaimer

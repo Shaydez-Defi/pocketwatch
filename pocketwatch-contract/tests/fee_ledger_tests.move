@@ -1,7 +1,7 @@
 #[test_only]
-module yeti::fee_ledger_tests {
+module pocketwatch::fee_ledger_tests {
   use sui::test_scenario::{Self as ts};
-  use yeti::fee_ledger::{
+  use pocketwatch::fee_ledger::{
     Self,
     FeeLedger,
     SavingsBoard,

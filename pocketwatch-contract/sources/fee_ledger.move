@@ -1,4 +1,4 @@
-module yeti::fee_ledger {
+module pocketwatch::fee_ledger {
   use sui::object::{Self, UID};
   use sui::tx_context::{Self, TxContext};
   use sui::transfer;

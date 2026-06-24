@@ -14,7 +14,7 @@ export const MODULE = 'fee_ledger'
 
 /** localStorage key for the user's FeeLedger object id (created once, reused).
  *  Suffixed with the package so a redeploy never reuses a stale ledger id. */
-export const LEDGER_STORAGE_KEY = `yeti-sui-ledger-id:${PACKAGE_ID.slice(0, 10)}`
+export const LEDGER_STORAGE_KEY = `pocketwatch-sui-ledger-id:${PACKAGE_ID.slice(0, 10)}`
 
 /** Move stores USD as integer cents, so multiply by 100 and round. */
 export function usdToU64(value: number): bigint {
