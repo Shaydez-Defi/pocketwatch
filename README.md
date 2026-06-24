@@ -2,7 +2,7 @@
 
 PocketWatch is a multi-chain Web3 dashboard that analyzes gas fee spending across wallets and blockchains, prices each fee in USD, and compares totals against estimated Sui costs. Users can optionally persist analysis results on Sui testnet through a Move smart contract and contribute to a shared community savings board.
 
-**Live demo:** https://pocketwatch.vercel.app
+**Live demo:** https://pocketwatch-app.vercel.app
 
 Built for the Sui hackathon. Onchain logic is implemented in Move (`pocketwatch-contract`).
 
