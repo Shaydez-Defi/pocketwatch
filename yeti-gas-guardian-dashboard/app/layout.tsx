@@ -16,10 +16,9 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'PocketWatch | Prove Your Gas Savings on Sui',
+  title: 'PocketWatch | Multi-Chain Gas Analysis',
   description:
-    'Track what you spend on gas across every chain, see how much Sui would have saved you, then write that proof onchain to a public Sui ledger. Your friendly Yeti keeps the receipts.',
-  generator: 'v0.app',
+    'Analyze gas fees across EVM, Solana, and Tron. Compare spending against estimated Sui costs and optionally save results to a Sui testnet ledger.',
 }
 
 export const viewport = {
