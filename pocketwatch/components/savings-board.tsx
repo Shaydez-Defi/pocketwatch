@@ -42,7 +42,7 @@ export function SavingsBoard() {
             icon={<TrendingUp className="size-4" aria-hidden="true" />}
             label="Community would've saved on Sui"
             value={isLoading ? '…' : formatUsd(data!.totalSavedUsd)}
-            highlight
+            loss
           />
           <Stat
             icon={<Users className="size-4" aria-hidden="true" />}
@@ -53,6 +53,7 @@ export function SavingsBoard() {
             icon={<TrendingUp className="size-4" aria-hidden="true" />}
             label="Largest est. difference"
             value={isLoading ? '…' : formatUsd(data!.biggestSavingUsd)}
+            loss
           />
         </div>
       )}
@@ -64,12 +65,12 @@ function Stat({
   icon,
   label,
   value,
-  highlight = false,
+  loss = false,
 }: {
   icon: React.ReactNode
   label: string
   value: string
-  highlight?: boolean
+  loss?: boolean
 }) {
   return (
     <div className="rounded-xl border border-border/60 bg-secondary/30 p-4">
@@ -78,9 +79,10 @@ function Stat({
         <span className="text-[11px]">{label}</span>
       </div>
       <p
-        className={`mt-1 font-heading text-2xl font-bold tracking-tight ${
-          highlight ? 'text-success text-glow' : 'text-foreground'
-        }`}
+        className={[
+          'mt-1 font-heading text-2xl font-bold tracking-tight',
+          loss ? 'text-destructive' : 'text-foreground',
+        ].join(' ')}
       >
         {value}
       </p>
