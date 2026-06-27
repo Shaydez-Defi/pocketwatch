@@ -12,6 +12,7 @@ import {
 } from '@mysten/dapp-kit'
 import { formatUsd } from '@/lib/fees'
 import { useCountUp } from '@/hooks/use-count-up'
+import { SavingsBoard } from '@/components/savings-board'
 import {
   buildCreateLedgerTx,
   buildSaveAnalysisTx,
@@ -256,9 +257,14 @@ export function MetricCards({
         />
       </div>
       {canSave && (
-        <div className={animate ? 'animate-results-reveal animate-stagger-4' : ''}>
-          <SaveToSui totalPaid={totalPaid} totalSui={totalSui} saved={saved} />
-        </div>
+        <>
+          <div className={animate ? 'animate-results-reveal animate-stagger-4' : ''}>
+            <SaveToSui totalPaid={totalPaid} totalSui={totalSui} saved={saved} />
+          </div>
+          <div className={animate ? 'animate-results-reveal animate-stagger-5' : ''}>
+            <SavingsBoard />
+          </div>
+        </>
       )}
     </section>
   )

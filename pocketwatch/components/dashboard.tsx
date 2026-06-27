@@ -4,7 +4,6 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { TopNav } from '@/components/top-nav'
 import { ShockHero } from '@/components/shock-hero'
 import { MetricCards } from '@/components/metric-cards'
-import { SavingsBoard } from '@/components/savings-board'
 import { FeeChart } from '@/components/fee-chart'
 import { CsvUpload } from '@/components/csv-upload'
 import { WalletPanel } from '@/components/wallet-panel'
@@ -155,8 +154,6 @@ export function Dashboard() {
             </>
           )}
         </section>
-
-        <SavingsBoard />
 
         <div className="grid gap-5 md:grid-cols-2">
           <WalletPanel

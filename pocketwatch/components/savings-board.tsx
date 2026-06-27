@@ -25,8 +25,9 @@ export function SavingsBoard() {
           <h2 className="font-heading text-lg font-bold text-foreground">
             Community Savings Board
           </h2>
-          <p className="text-[11px] text-muted-foreground">
-            Live on Sui. Every saved analysis adds to the total.
+          <p className="text-[11px] leading-relaxed text-muted-foreground">
+            Live on Sui. Running total of estimated gas everyone paid vs what the same
+            activity would have cost on Sui. Potential savings, not money already saved.
           </p>
         </div>
       </div>
@@ -39,18 +40,18 @@ export function SavingsBoard() {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <Stat
             icon={<TrendingUp className="size-4" aria-hidden="true" />}
-            label="Saved collectively"
+            label="Community would've saved on Sui"
             value={isLoading ? '…' : formatUsd(data!.totalSavedUsd)}
             highlight
           />
           <Stat
             icon={<Users className="size-4" aria-hidden="true" />}
-            label="Analyses saved"
+            label="Analyses on board"
             value={isLoading ? '…' : data!.totalAnalyses.toLocaleString()}
           />
           <Stat
             icon={<TrendingUp className="size-4" aria-hidden="true" />}
-            label="Biggest single save"
+            label="Largest est. difference"
             value={isLoading ? '…' : formatUsd(data!.biggestSavingUsd)}
           />
         </div>

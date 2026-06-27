@@ -43,7 +43,7 @@ All chain comparisons are estimates. They are not financial advice or live quote
   - Onchain analyst (rule-based Q&A over your analysis data)
   - PocketWatch Wrapped (shareable summary card: copy, download PNG, share to X)
 - **Yeti tips:** Contextual commentary based on savings and analysis results.
-- **Community Savings Board:** Live totals from the Sui testnet shared object (collective savings, analysis count, biggest single save).
+- **Community Savings Board:** Live on Sui testnet. Running total of estimated gas paid vs estimated Sui cost across all saved analyses (potential savings, not money already saved).
 
 ### Sui integration
 
